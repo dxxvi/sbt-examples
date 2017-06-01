@@ -1,3 +1,5 @@
+import sbt.Keys.crossPaths
+
 lazy val commonSettings = Seq(
   organization := "home",
   scalaVersion := "2.11.11"
@@ -48,6 +50,9 @@ lazy val awsl = (project in file("aws-lambda"))
     libraryDependencies ++= Seq(
       "org.apache.logging.log4j" % "log4j-api" % log4jVersion,
       "org.apache.logging.log4j" % "log4j-core" % log4jVersion,
-      "com.amazonaws" % "aws-lambda-java-core" % "1.1.0"
-    )
+      "com.amazonaws" % "aws-lambda-java-core" % "1.1.0",
+      "junit" % "junit" % "4.12" % Test,
+      "com.novocode" % "junit-interface" % "0.11" % Test
+    ),
+    crossPaths := false
   )
