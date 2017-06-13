@@ -56,3 +56,11 @@ lazy val awsl = (project in file("aws-lambda"))
     ),
     crossPaths := false
   )
+
+lazy val hkr = (project in file("hacker-rank"))
+  .settings(
+    commonSettings,
+    name := "from hackerrank",
+    version := "1.0",
+    scalaVersion := "2.12.2"
+  )
