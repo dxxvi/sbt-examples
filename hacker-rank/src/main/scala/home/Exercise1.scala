@@ -13,18 +13,18 @@ object Exercise1 {
             val line3 = StdIn.readLine.trim
             queries += Tuple3(line1, line2, line3)
         })
-        queries.foreach(q => solve(q))
+        queries.foreach(solve(_))
     }
 
     def solve(query: (String, String, String)) {
         val s = ArrayBuffer[Cut]()
         var a = query._2 split "[ ]+"
-        (1 to a.length).foreach(i => s += Cut("y", i, a(i - 1).toInt))
+        s ++= a.zipWithIndex.map(tuple2 => Cut("y", tuple2._2 + 1, tuple2._1.toInt))
         a = query._3 split "[ ]+"
-        (1 to a.length).foreach(i => s += Cut("x", i, a(i - 1).toInt))
+        s ++= a.zipWithIndex.map(tuple2 => Cut("x", tuple2._2 + 1, tuple2._1.toInt))
 
         val solution = s.permutations.map(x => Solution(x)).minBy(sol => sol.cost)
-        println(solution.cuts.map(x => x.direction + x.order).mkString(", ") + " " + solution.cost)
+        println(solution.cuts.map(x => x.direction + x.order).mkString(", ") + " " + (solution.cost % (10^9 + 7)))
     }
 }
 
@@ -39,17 +39,16 @@ case class Solution(cuts: ArrayBuffer[Cut]) {
             case _ =>
                 var ypieces = 1
                 var xpieces = 1
-                _cost = Some(
-                    cuts.foldLeft(0)((b, cut) => cut match {
-                        case Cut("y", _, c) =>
-                            ypieces += 1
-                            b + c * xpieces
-                        case Cut(_, _, c) =>
-                            xpieces += 1
-                            b + c * ypieces
-                    })
-                )
-                _cost.get
+                val _c = cuts.foldLeft(0)((b, cut) => cut match {
+                    case Cut("y", _, c) =>
+                        ypieces += 1
+                        b + c * xpieces
+                    case Cut(_, _, c) =>
+                        xpieces += 1
+                        b + c * ypieces
+                })
+                _cost = Some(_c)
+                _c
         }
     }
 }
