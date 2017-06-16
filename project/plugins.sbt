@@ -13,4 +13,4 @@ addSbtPlugin("org.irundaia.sbt" % "sbt-sassify" % "1.4.6")
 // dependency tree like maven
 addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.8.2")
 
-addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.4")
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.5")
